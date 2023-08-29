@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Hitung Nilai Rata-rata</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+  #container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: rgb(255, 233, 213);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    text-align: center;
+  }
+  form {
+    text-align: center;
+  }
+  label {
+    width: 200px;
+    float: left;
+    padding-right: 24px;
+  }
+  input[type="text"], select, button {
+    width: 45%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+  }
+  button {
+    background-color: #BDB76B;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  table {
+    width: 80%;
+    border-collapse: collapse;
+  }
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+  }
+</style>
+</head>
+<body>
+<div id="container">
+  <h1>Hitung Nilai Rata-rata</h1>
+  <form id="nilaiForm">
+    <label for="nama">Nama:</label>
+    <input type="text" id="nama" name="nama" required>
+
+    <label for="mataKuliah">Mata Kuliah:</label>
+    <input type="text" id="mataKuliah" name="mataKuliah" required>
+
+    <label for="grade">Grade:</label>
+    <select id="grade" name="grade" required>
+      <option value="Pilih Grade">Pilih Grade</option>
+      <option value="A">A</option>
+      <option value="B">B</option>
+      <option value="C">C</option>
+      <option value="D">D</option>
+      <option value="E">E</option>
+    </select>
+
+    <br><button type="button" onclick="hitungRataRata()">Hitung</button>
+    <button type="button" onclick="resetForm()">Reset</button>
+  </form>
+<br>
+  <table id="hasilTable" style="margin-left:auto;margin-right:auto" border="1">
+    <tr>
+      <th>Nama</th>
+      <th>Mata Kuliah</th>
+      <th>Grade</th>
+      <th>Nilai Rata-rata</th>
+    </tr>
+  </table>
+</div>
+
+<script>
+function hitungRataRata() {
+  var nilaiMapping = {
+    A: 4,
+    B: 3,
+    C: 2,
+    D: 1,
+    E: 0
+  };
+
+  var nama = document.getElementById("nama").value;
+  var mataKuliah = document.getElementById("mataKuliah").value;
+  var selectedGrade = document.getElementById("grade").value;
+  var nilai = nilaiMapping[selectedGrade];
+
+  var hasilTable = document.getElementById("hasilTable");
+  var newRow = hasilTable.insertRow(-1);
+  var cell1 = newRow.insertCell(0);
+  var cell2 = newRow.insertCell(1);
+  var cell3 = newRow.insertCell(2);
+  var cell4 = newRow.insertCell(3);
+
+  cell1.innerHTML = nama;
+  cell2.innerHTML = mataKuliah;
+  cell3.innerHTML = selectedGrade;
+  cell4.innerHTML = nilai;
+
+  // Hitung nilai rata-rata
+  var totalNilai = 0;
+  var jumlahData = hasilTable.rows.length - 1; // Mengurangi 1 untuk header
+  for (var i = 1; i <= jumlahData; i++) {
+    totalNilai += parseInt(hasilTable.rows[i].cells[3].innerHTML);
+  }
+  var rataRata = totalNilai / jumlahData;
+
+  // Update rata-rata pada baris terakhir
+  hasilTable.rows[jumlahData].cells[3].innerHTML = rataRata.toFixed(2);
+}
+
+function resetForm() {
+  document.getElementById("nilaiForm").reset();
+}
+
+</script>
+</body>
+</html>
